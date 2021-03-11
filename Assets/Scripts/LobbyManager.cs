@@ -2,27 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using TMPro;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
-    // Start is called before the first frame update
+    [SerializeField] TMP_InputField nicknameField;
+    [SerializeField] TMP_InputField roomNameField;
+    [SerializeField] MenuManager menuManager;
     void Start()
     {
+        //EnableLoadingMenu
+        menuManager.Open(menuManager.menus[0]);
+
         PhotonNetwork.NickName = "Player " + Random.Range(1, 999);
 
-        PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.GameVersion = "0";
         PhotonNetwork.ConnectUsingSettings();
     }
 
     public override void OnConnectedToMaster()
     {
-        base.OnConnectedToMaster();
+        menuManager.Open(menuManager.menus[1]);
+        Debug.Log("Connected To Master");
     }
 
     public void CreateRoom()
     {
-        PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions { MaxPlayers = 2 });
+        if (string.IsNullOrEmpty(roomNameField.text))
+        {
+            return;
+        }
     }
 
     public void JoinRoom()
@@ -34,5 +43,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     void Update()
     {
         
+    }
+
+    public void ReNicknameMe()
+    {
+        PhotonNetwork.NickName = nicknameField.text;
     }
 }
