@@ -15,7 +15,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] TMP_Text roomNameText;
     [SerializeField] TMP_Text errorText;
     [SerializeField] Transform roomListContent;
+    [SerializeField] Transform playerListContent;
     [SerializeField] GameObject roomListItemPrefab;
+    [SerializeField] GameObject playerListItemPrefab;
 
     private void Awake()
     {
@@ -36,6 +38,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         menuManager.Open(menuManager.menus[1]);
         Debug.Log("Connected To Master");
+
+        PhotonNetwork.JoinLobby();
     }
 
     public void CreateRoom()
@@ -60,27 +64,36 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        // foreach (Transform trans in roomListContent)
-        //  {
-        //    Destroy(trans.gameObject);
-        //  }
-        Debug.Log("FindRoom!!!!");
+        foreach (Transform trans in roomListContent)
+        {
+            Destroy(trans.gameObject);
+        }
         for (int i = 0; i < roomList.Count; i++)
         {
             Instantiate(roomListItemPrefab, roomListContent).GetComponent<RoomListItem>().SetUp(roomList[i]);
         }
     }
 
+    //ОШИБКА JOIN LOBBY == JOIN ROOM
     public void JoinLobby(RoomInfo info)
     {
         PhotonNetwork.JoinRoom(info.Name);
         menuManager.Open(menuManager.menus[0]);
+
+      
     }
 
     public override void OnJoinedRoom()
     {
         menuManager.Open(menuManager.menus[5]);
         roomNameText.text = PhotonNetwork.CurrentRoom.Name;
+
+        Player[] players = PhotonNetwork.PlayerList;
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            Instantiate(playerListItemPrefab, playerListContent).GetComponent<PlayerListiner>().SetUp(players[i]);
+        }
     }
 
     public void LeaveRoom()
@@ -92,5 +105,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         menuManager.Open(menuManager.menus[1]);
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Instantiate(playerListItemPrefab, playerListContent).GetComponent<PlayerListiner>().SetUp(newPlayer); 
     }
 }
