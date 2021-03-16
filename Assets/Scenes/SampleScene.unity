@@ -2825,6 +2825,7 @@ MonoBehaviour:
     type: 3}
   playerListItemPrefab: {fileID: 6094220689822469461, guid: 2436d8f9dfdcd204eb4dade0a0d265b0,
     type: 3}
+  startGameButton: {fileID: 340435031}
 --- !u!114 &939156742
 MonoBehaviour:
   m_ObjectHideFlags: 0
