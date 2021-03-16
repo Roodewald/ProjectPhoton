@@ -16,9 +16,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] TMP_Text errorText;
     [SerializeField] Transform roomListContent;
     [SerializeField] Transform playerListContent;
-    [SerializeField] GameObject roomListItemPrefab;
+    [SerializeField] RoomListItem roomListItemPrefab;
     [SerializeField] GameObject playerListItemPrefab;
-    
+
+    private List<RoomListItem> _list = new List<RoomListItem>();
 
     private void Awake()
     {
@@ -73,13 +74,26 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        foreach (Transform trans in roomListContent)
+        foreach(RoomInfo info in roomListContent)
         {
-            Destroy(trans.gameObject);
-        }
-        for (int i = 0; i < roomList.Count; i++)
-        {
-            Instantiate(roomListItemPrefab, roomListContent).GetComponent<RoomListItem>().SetUp(roomList[i]);
+            if (info.RemovedFromList)
+            {
+                int i = _list.FindIndex(x => x.info.Name == info.Name);
+                if (i != -1)
+                {
+                    Destroy(_list[i].gameObject);
+                    _list.RemoveAt(i);
+                }
+            }
+            else
+            {
+                RoomListItem list = Instantiate(roomListItemPrefab, roomListContent);
+                if(list != null)
+                {
+                    list.GetComponent<RoomListItem>().SetUp(info);
+                    _list.Add(list);
+                }
+            }
         }
     }
 
