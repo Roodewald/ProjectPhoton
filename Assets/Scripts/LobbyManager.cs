@@ -18,6 +18,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] Transform playerListContent;
     [SerializeField] GameObject roomListItemPrefab;
     [SerializeField] GameObject playerListItemPrefab;
+    
 
     private void Awake()
     {
@@ -41,6 +42,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.JoinLobby();
     }
+    public void QuitGame()
+    {
+        Debug.Log("Application Quit");
+        Application.Quit();
+
+        PhotonNetwork.LeaveLobby();
+    }
 
     public void CreateRoom()
     {
@@ -48,6 +56,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             return;
         }
+        menuManager.Open(menuManager.menus[0]);
         PhotonNetwork.CreateRoom(roomNameField.text);
     }
     
@@ -74,13 +83,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
-    //ОШИБКА JOIN LOBBY == JOIN ROOM
-    public void JoinLobby(RoomInfo info)
+    public void JoinRoom(RoomInfo info)
     {
         PhotonNetwork.JoinRoom(info.Name);
         menuManager.Open(menuManager.menus[0]);
-
-      
     }
 
     public override void OnJoinedRoom()
@@ -98,17 +104,26 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void LeaveRoom()
     {
-        menuManager.Open(menuManager.menus[1]);
+        foreach (Transform trans in roomListContent)
+        {
+            Destroy(trans.gameObject);
+        }
+        menuManager.Open(menuManager.menus[0]);
         PhotonNetwork.LeaveRoom();
+        
     }
-
     public override void OnLeftRoom()
     {
         menuManager.Open(menuManager.menus[1]);
+        foreach (Transform child in playerListContent)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Instantiate(playerListItemPrefab, playerListContent).GetComponent<PlayerListiner>().SetUp(newPlayer); 
+        Instantiate(playerListItemPrefab, playerListContent).GetComponent<PlayerListiner>().SetUp(newPlayer);
     }
+ 
 }

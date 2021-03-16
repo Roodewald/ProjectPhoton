@@ -20,10 +20,7 @@ public class PlayerListiner : MonoBehaviourPunCallbacks
         if(otherPlayer == playerInItem)
         {
             Destroy(gameObject);
+            Debug.Log("PlayerLeft");
         }
-    }
-    public override void OnLeftRoom()
-    {
-        Destroy(gameObject);
     }
 }

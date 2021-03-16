@@ -17,6 +17,6 @@ public class RoomListItem : MonoBehaviour
     }
     public void OnClick()
     {
-        LobbyManager.manager.JoinLobby(info);
+        LobbyManager.manager.JoinRoom(info);
     }
 }
