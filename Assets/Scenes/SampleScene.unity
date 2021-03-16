@@ -2691,7 +2691,7 @@ MonoBehaviour:
   errorText: {fileID: 139747549}
   roomListContent: {fileID: 702629404}
   playerListContent: {fileID: 961491047}
-  roomListItemPrefab: {fileID: 2435717983865613920, guid: 8b1c421bd645e9f4ab525fd32966568c,
+  roomListItemPrefab: {fileID: 7474791430614990595, guid: 8b1c421bd645e9f4ab525fd32966568c,
     type: 3}
   playerListItemPrefab: {fileID: 6094220689822469461, guid: 2436d8f9dfdcd204eb4dade0a0d265b0,
     type: 3}

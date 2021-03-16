@@ -74,25 +74,25 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        foreach(RoomInfo info in roomListContent)
+        Debug.Log(roomList);
+        foreach (RoomInfo info in roomList)
         {
             if (info.RemovedFromList)
             {
-                int i = _list.FindIndex(x => x.info.Name == info.Name);
-                if (i != -1)
+                int index = _list.FindIndex(x => x.info.Name == info.Name);
+                if (index != -1)
                 {
-                    Destroy(_list[i].gameObject);
-                    _list.RemoveAt(i);
+                    Destroy(_list[index].gameObject);
+                    _list.RemoveAt(index);
                 }
             }
             else
             {
-                RoomListItem list = Instantiate(roomListItemPrefab, roomListContent);
-                if(list != null)
-                {
-                    list.GetComponent<RoomListItem>().SetUp(info);
-                    _list.Add(list);
-                }
+                Debug.Log(info);
+                RoomListItem listing = Instantiate(roomListItemPrefab, roomListContent);
+                if (listing != null)
+                    listing.SetUp(info);
+                _list.Add(listing);
             }
         }
     }
