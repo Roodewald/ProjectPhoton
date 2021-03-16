@@ -18,6 +18,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] Transform playerListContent;
     [SerializeField] RoomListItem roomListItemPrefab;
     [SerializeField] GameObject playerListItemPrefab;
+    [SerializeField] GameObject startGameButton;
 
     private List<RoomListItem> _list = new List<RoomListItem>();
 
@@ -35,6 +36,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.ConnectUsingSettings();
     }
+    public void StartGame()
+    {
+        PhotonNetwork.LoadLevel(1);
+    }
 
     public override void OnConnectedToMaster()
     {
@@ -42,6 +47,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         Debug.Log("Connected To Master");
 
         PhotonNetwork.JoinLobby();
+        PhotonNetwork.AutomaticallySyncScene = true;
     }
     public void QuitGame()
     {
@@ -74,7 +80,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        Debug.Log(roomList);
         foreach (RoomInfo info in roomList)
         {
             if (info.RemovedFromList)
@@ -114,6 +119,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             Instantiate(playerListItemPrefab, playerListContent).GetComponent<PlayerListiner>().SetUp(players[i]);
         }
+        startGameButton.SetActive(PhotonNetwork.IsMasterClient);
+    }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        startGameButton.SetActive(PhotonNetwork.IsMasterClient);
     }
 
     public void LeaveRoom()
