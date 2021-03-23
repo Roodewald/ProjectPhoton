@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,14 +14,27 @@ public class PlayerController : MonoBehaviour
     Vector3 moveAmount;
 
     Rigidbody playerRigidbody;
+    PhotonView PV;
 
     private void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody>();
+        PV = GetComponent<PhotonView>();
+
+    }
+    private void Start()
+    {
+        if (!PV.IsMine)
+        {
+            Destroy(GetComponentInChildren<Camera>().gameObject);
+            Destroy(playerRigidbody);
+        }  
     }
 
     private void Update()
     {
+        if (!PV.IsMine)
+            return;
         Look();
 
         Move();
@@ -29,6 +43,8 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (!PV.IsMine)
+            return;
         playerRigidbody.MovePosition(playerRigidbody.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
     }
 
