@@ -13,7 +13,6 @@ public class PlayerGroundChaker : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("cEnter");
         if (collision.gameObject == playerController.gameObject)
             return;
 
@@ -21,7 +20,6 @@ public class PlayerGroundChaker : MonoBehaviour
     }
     private void OnCollisionExit(Collision collision)
     {
-        Debug.Log("cExit");
         if (collision.gameObject == playerController.gameObject)
             return;
 
@@ -30,7 +28,6 @@ public class PlayerGroundChaker : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        Debug.Log("cstay");
         if (collision.gameObject == playerController.gameObject)
             return;
         
@@ -38,7 +35,6 @@ public class PlayerGroundChaker : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("tEnter");
         if (other.gameObject == playerController.gameObject)
             return;
 
@@ -46,7 +42,6 @@ public class PlayerGroundChaker : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("tExit");
         if (other.gameObject == playerController.gameObject)
             return;
 
@@ -54,7 +49,6 @@ public class PlayerGroundChaker : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log("tstay");
         if (other.gameObject == playerController.gameObject)
             return;
 

@@ -93,7 +93,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             }
             else
             {
-                Debug.Log(info);
                 RoomListItem listing = Instantiate(roomListItemPrefab, roomListContent);
                 if (listing != null)
                     listing.SetUp(info);
