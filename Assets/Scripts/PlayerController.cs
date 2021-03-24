@@ -6,7 +6,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 using ExitGames.Client.Photon;
 using Photon.Realtime;
 
-public class PlayerController : MonoBehaviourPunCallbacks
+public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
 {
     [SerializeField] GameObject cameraHolder;
     [SerializeField] float mouseSensitivity, sprintSpeed, walkSpeed, jumpForce, smoothTime;
@@ -152,5 +152,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public void SetGroundedSate(bool _grounded)
     {
         grounded = _grounded;
+    }
+    public void TakeDamage(float Damage)
+    {
+        Debug.Log("took damage:" + Damage);
     }
 }

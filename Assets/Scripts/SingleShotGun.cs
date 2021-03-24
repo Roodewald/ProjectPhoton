@@ -15,7 +15,7 @@ public class SingleShotGun : Gun
         ray.origin = playerCamera.transform.position;
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            Debug.Log("Wee hit" + hit.collider.gameObject.name);
+            hit.collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(((GunInfo)itemInfo).damage);
         }
     }
 }
