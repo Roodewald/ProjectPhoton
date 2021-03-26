@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
     int itemIndex;
     int previousItemIndex = -1;
 
+    const float maxHealth = 100f;
+    float curretHealth = maxHealth;
+
     float verticalLookRotation;
     [SerializeField] bool grounded;
     Vector3 smothMoveVelocity;
@@ -153,8 +156,29 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
     {
         grounded = _grounded;
     }
-    public void TakeDamage(float Damage)
+    public void TakeDamage(float damage)
     {
-        Debug.Log("took damage:" + Damage);
+        PV.RPC("RPC_TakeDamage", RpcTarget.All, damage);
+    }
+
+    [PunRPC]
+    void RPC_TakeDamage(float damage)
+    {
+        if (!PV.IsMine)
+        {
+            return;
+        }
+
+        curretHealth -= damage;
+
+        if (curretHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Debug.Log("You Died");
     }
 }
