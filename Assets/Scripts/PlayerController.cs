@@ -25,12 +25,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
 
     Rigidbody playerRigidbody;
     PhotonView PV;
+    PlayerManager playerManager;
 
     private void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody>();
         PV = GetComponent<PhotonView>();
 
+        playerManager = PhotonView.Find((int)PV.InstantiationData[0]).GetComponent<PlayerManager>();
     }
     private void Start()
     {
@@ -179,6 +181,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
 
     void Die()
     {
-        Debug.Log("You Died");
+        playerManager.Die();
     }
 }
