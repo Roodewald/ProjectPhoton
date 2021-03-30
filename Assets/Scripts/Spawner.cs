@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    Spawner instanse;
-
-    SpawnPoints
+    [SerializeField] GameObject self;
 
     private void Awake()
     {
-        instanse = this;
+        self.SetActive(false);
     }
 }
