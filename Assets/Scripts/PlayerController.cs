@@ -13,7 +13,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
     [SerializeField] GameObject ui;
 
     [SerializeField] GameObject cameraHolder;
-    [SerializeField] float mouseSensitivity, sprintSpeed, walkSpeed, jumpForce, smoothTime;
+    [SerializeField] float  sprintSpeed, walkSpeed, jumpForce, smoothTime;
+    public float mouseSensitivity;
     [SerializeField] Item[] items;
 
     int itemIndex;

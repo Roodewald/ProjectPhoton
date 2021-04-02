@@ -23,6 +23,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] RoomListItem roomListItemPrefab;
     [SerializeField] GameObject playerListItemPrefab;
     [SerializeField] GameObject startGameButton;
+    [SerializeField] TMP_Text placeholderNicnameText;
+    [SerializeField] TMP_Text placeholderSensText;
 
     private List<RoomListItem> _list = new List<RoomListItem>();
 
@@ -40,12 +42,17 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.NickName = PlayerPrefs.GetString(nicknameKey);
         }
-        PhotonNetwork.NickName = "Player " + Random.Range(1, 999);
+        else
+        {
+            PhotonNetwork.NickName = "Player " + Random.Range(1, 999);
+        }
 
         PhotonNetwork.GameVersion = gameversion;
         gameVersionField.text = gameversion;
 
         PhotonNetwork.ConnectUsingSettings();
+ 
+        placeholderNicnameText.text = PhotonNetwork.NickName;
     }
     public void StartGame()
     {
