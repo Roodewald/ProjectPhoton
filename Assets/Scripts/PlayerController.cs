@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
     float curretHealth = maxHealth;
 
     float verticalLookRotation;
-    [SerializeField] bool grounded;
+    bool grounded;
     Vector3 smothMoveVelocity;
     Vector3 moveAmount;
 
@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
         if (PV.IsMine)
         {
             EquipItem(0);
+            Cursor.lockState = CursorLockMode.Locked;
         }
         else
         {
@@ -59,6 +60,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
         Look();
         Move();
         Jump();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
 
         for (int i = 0; i < items.Length; i++)
         {

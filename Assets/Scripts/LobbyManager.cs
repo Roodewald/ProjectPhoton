@@ -8,12 +8,16 @@ using Photon.Realtime;
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
     public static LobbyManager manager;
+    public string gameversion = "0.01";
+
+    string nicknameKey = "Nickname";
 
     [SerializeField] TMP_InputField nicknameField;
     [SerializeField] TMP_InputField roomNameField;
     [SerializeField] MenuManager menuManager;
     [SerializeField] TMP_Text roomNameText;
     [SerializeField] TMP_Text errorText;
+    [SerializeField] TMP_Text gameVersionField;
     [SerializeField] Transform roomListContent;
     [SerializeField] Transform playerListContent;
     [SerializeField] RoomListItem roomListItemPrefab;
@@ -32,7 +36,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         //EnableLoadingMenu
         menuManager.Open(menuManager.menus[0]);
 
+        if (PlayerPrefs.HasKey(nicknameKey))
+        {
+            PhotonNetwork.NickName = PlayerPrefs.GetString(nicknameKey);
+        }
         PhotonNetwork.NickName = "Player " + Random.Range(1, 999);
+
+        PhotonNetwork.GameVersion = gameversion;
+        gameVersionField.text = gameversion;
 
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -76,6 +87,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void ReNicknameMe()
     {
         PhotonNetwork.NickName = nicknameField.text;
+
+        PlayerPrefs.SetString(nicknameKey, nicknameField.text);
+        PlayerPrefs.Save();
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)

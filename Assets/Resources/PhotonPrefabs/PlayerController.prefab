@@ -340,9 +340,9 @@ MonoBehaviour:
   ui: {fileID: 7483330917452158958}
   cameraHolder: {fileID: 1052591401673186181}
   mouseSensitivity: 3
-  sprintSpeed: 10
-  walkSpeed: 5
-  jumpForce: 350
+  sprintSpeed: 15
+  walkSpeed: 10
+  jumpForce: 420
   smoothTime: 0.1
   items:
   - {fileID: 2070743217451809458}

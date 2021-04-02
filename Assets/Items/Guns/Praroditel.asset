@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Praroditel
   m_EditorClassIdentifier: 
   itemName: Praroditel
-  damage: 100
+  damage: 50
