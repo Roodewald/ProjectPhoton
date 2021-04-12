@@ -87,7 +87,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1052591401673186181}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.149}
+  m_LocalPosition: {x: 0, y: 0, z: -0.033}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6249196961719293700}
@@ -339,15 +339,14 @@ MonoBehaviour:
   HealthBarImage: {fileID: 4774903240786839998}
   ui: {fileID: 7483330917452158958}
   cameraHolder: {fileID: 1052591401673186181}
-  mouseSensitivity: 3
   sprintSpeed: 15
   walkSpeed: 10
   jumpForce: 420
   smoothTime: 0.1
+  mouseSensitivity: 3
   items:
   - {fileID: 2070743217451809458}
   - {fileID: 7354337633829283143}
-  grounded: 0
 --- !u!54 &5402082477189098106
 Rigidbody:
   m_ObjectHideFlags: 0
