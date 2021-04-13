@@ -27,6 +27,7 @@ public class SingleShotGun : Gun
             hit.collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(((GunInfo)itemInfo).damage);
             PV.RPC("RPCShot", RpcTarget.All, hit.point, hit.normal);
         }
+        
     }
 
     [PunRPC]
@@ -35,5 +36,6 @@ public class SingleShotGun : Gun
     {
         GameObject bulletImpact = Instantiate(bulletImpactPrefab, hitposition + normal * 0.001f, Quaternion.LookRotation(normal, Vector3.up)* bulletImpactPrefab.transform.rotation);
         Destroy(bulletImpact, 5f);
+        shootSound.Play();
     }
 }
