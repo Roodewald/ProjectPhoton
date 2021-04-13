@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
         {
             EquipItem(0);
             Cursor.lockState = CursorLockMode.Locked;
-            mouseSensitivity = 3;
+            mouseSensitivity = LobbyManager.manager.sensetivety;
         }
         else
         {

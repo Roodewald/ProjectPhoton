@@ -3157,7 +3157,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1314338528}
   - {fileID: 1970462378}
   - {fileID: 1336005704}
   m_Father: {fileID: 806683639}
@@ -3335,8 +3334,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameversion: 0.01
+  sensetivety: 50
   nicknameField: {fileID: 1336005705}
   roomNameField: {fileID: 941888976}
+  sensetivetyField: {fileID: 994784881}
   menuManager: {fileID: 939156746}
   roomNameText: {fileID: 1491484104}
   errorText: {fileID: 139747549}
@@ -3349,7 +3350,7 @@ MonoBehaviour:
     type: 3}
   startGameButton: {fileID: 340435031}
   placeholderNicnameText: {fileID: 2144023244}
-  placeholderSensText: {fileID: 0}
+  placeholderSensText: {fileID: 1018723166}
 --- !u!114 &939156742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4063,7 +4064,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enter Nickname...
+  m_text: Enter Sens...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4981,7 +4982,7 @@ GameObject:
   - component: {fileID: 1314338530}
   - component: {fileID: 1314338529}
   m_Layer: 5
-  m_Name: Apply Nickname
+  m_Name: Apply Settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4999,12 +5000,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 255371008}
-  m_Father: {fileID: 872788076}
-  m_RootOrder: 0
+  m_Father: {fileID: 1919173505}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -9.700012, y: 23.9}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -0.000010267, y: 96}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1314338529
@@ -5051,11 +5052,22 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 939156741}
-        m_MethodName: ReNicknameMe
+        m_MethodName: SaveSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 939156746}
+        m_MethodName: Open
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1970440561}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5264,7 +5276,7 @@ RectTransform:
   m_Children:
   - {fileID: 1283067058}
   m_Father: {fileID: 872788076}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -6097,7 +6109,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1600912852}
   m_Layer: 5
-  m_Name: Mouse Sens
+  m_Name: Mouse Sensetivety
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6458,6 +6470,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 24202562}
+  - {fileID: 1314338528}
   m_Father: {fileID: 1758828504}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6761,7 +6774,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 872788076}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}

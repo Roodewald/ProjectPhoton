@@ -9,11 +9,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 {
     public static LobbyManager manager;
     public string gameversion = "0.01";
+    public float sensetivety;
 
     string nicknameKey = "Nickname";
+    string sensetivetyKey = "Sensetivety";
 
     [SerializeField] TMP_InputField nicknameField;
     [SerializeField] TMP_InputField roomNameField;
+    [SerializeField] TMP_InputField sensetivetyField;
     [SerializeField] MenuManager menuManager;
     [SerializeField] TMP_Text roomNameText;
     [SerializeField] TMP_Text errorText;
@@ -38,21 +41,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         //EnableLoadingMenu
         menuManager.Open(menuManager.menus[0]);
 
-        if (PlayerPrefs.HasKey(nicknameKey))
-        {
-            PhotonNetwork.NickName = PlayerPrefs.GetString(nicknameKey);
-        }
-        else
-        {
-            PhotonNetwork.NickName = "Player " + Random.Range(1, 999);
-        }
+        LoadSettings();
 
         PhotonNetwork.GameVersion = gameversion;
         gameVersionField.text = gameversion;
 
         PhotonNetwork.ConnectUsingSettings();
- 
-        placeholderNicnameText.text = PhotonNetwork.NickName;
     }
     public void StartGame()
     {
@@ -91,12 +85,38 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         errorText.text = "Create room failed " + message + " With code :" + returnCode;
     }
 
-    public void ReNicknameMe()
+
+    public void SaveSettings()
     {
         PhotonNetwork.NickName = nicknameField.text;
-
         PlayerPrefs.SetString(nicknameKey, nicknameField.text);
+        
+        sensetivety = float.Parse(sensetivetyField.text);
+        PlayerPrefs.SetFloat(sensetivetyKey, sensetivety);
+
         PlayerPrefs.Save();
+    }
+    public void LoadSettings()
+    {
+        if (PlayerPrefs.HasKey(nicknameKey))
+        {
+            PhotonNetwork.NickName = PlayerPrefs.GetString(nicknameKey);
+        }
+        else
+        {
+            PhotonNetwork.NickName = "Player " + Random.Range(1, 999);
+        }
+        placeholderNicnameText.text = PhotonNetwork.NickName;
+
+        if (PlayerPrefs.HasKey(sensetivetyKey))
+        {
+            sensetivety = PlayerPrefs.GetFloat(sensetivetyKey);
+        }
+        else
+        {
+            sensetivety = 3;
+        }
+        placeholderSensText.text = sensetivety.ToString();
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
