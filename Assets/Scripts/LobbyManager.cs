@@ -8,7 +8,7 @@ using Photon.Realtime;
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
     public static LobbyManager manager;
-    public string gameversion = "0.01";
+    public string gameversion = "0.02";
     public float sensetivety;
 
     string nicknameKey = "Nickname";
@@ -44,7 +44,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         LoadSettings();
 
         PhotonNetwork.GameVersion = gameversion;
-        gameVersionField.text = gameversion;
+        gameVersionField.text = PhotonNetwork.GameVersion;
 
         PhotonNetwork.ConnectUsingSettings();
     }
