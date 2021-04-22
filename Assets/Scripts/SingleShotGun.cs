@@ -7,27 +7,44 @@ public class SingleShotGun : Gun
 {
     [SerializeField] Camera playerCamera;
 
+
     PhotonView PV;
 
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
+        maxAmmunation = ((GunInfo)itemInfo).ammunation;
+        ammunation = maxAmmunation;
+
+    }
+    public override void Reload()
+    {
+        ammunation = maxAmmunation;
     }
 
     public override void Use()
     {
         Shoot();
+
     }
     void Shoot()
     {
-        Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f));
-        ray.origin = playerCamera.transform.position;
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if(ammunation > 0)
         {
-            hit.collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(((GunInfo)itemInfo).damage);
-            PV.RPC("RPCShot", RpcTarget.All, hit.point, hit.normal);
+            Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f));
+            ray.origin = playerCamera.transform.position;
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                hit.collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                PV.RPC("RPCShot", RpcTarget.All, hit.point, hit.normal);
+            }
+            PV.RPC("PlayShootSound", RpcTarget.All);
+            ammunation--;
         }
-        PV.RPC("PlayShootSound", RpcTarget.All);
+        else
+        {
+            Reload();
+        }
     }
 
     [PunRPC]
@@ -42,4 +59,5 @@ public class SingleShotGun : Gun
     {
         shootSound.Play();
     }
+
 }

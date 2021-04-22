@@ -5,12 +5,12 @@ using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using ExitGames.Client.Photon;
 using Photon.Realtime;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
 {
-    [SerializeField] Image HealthBarImage;
     [SerializeField] GameObject ui;
+    [SerializeField] GameObject glases;
+    [SerializeField] UIPlayer uiPlayer;
 
     [SerializeField] GameObject cameraHolder;
     [SerializeField] float  sprintSpeed, walkSpeed, jumpForce, smoothTime;
@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
 
     int itemIndex;
     int previousItemIndex = -1;
+
+    //ammunation
+    int ammunation;
 
     const float maxHealth = 100f;
     float curretHealth = maxHealth;
@@ -46,6 +49,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
             EquipItem(0);
             Cursor.lockState = CursorLockMode.Locked;
             mouseSensitivity = LobbyManager.manager.sensetivety;
+            Destroy(glases);
         }
         else
         {
@@ -102,6 +106,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
         if (Input.GetMouseButtonDown(0))
         {
             items[itemIndex].Use();
+            UpdateUI(itemIndex);
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            items[itemIndex]?.GetComponent<Gun>().Reload();
+            UpdateUI(itemIndex);
         }
 
         if (transform.position.y < -50)
@@ -121,7 +131,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
         transform.Rotate(Vector3.up * Input.GetAxisRaw("Mouse X") * mouseSensitivity);
 
         verticalLookRotation += Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
-        verticalLookRotation = Mathf.Clamp(verticalLookRotation, -80f, 89f);
+        verticalLookRotation = Mathf.Clamp(verticalLookRotation, -80f, 85.5f);
 
         cameraHolder.transform.localEulerAngles = Vector3.left * verticalLookRotation;
     }
@@ -148,8 +158,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
         itemIndex = _index;
 
         items[itemIndex].itemGameObject.SetActive(true);
+        UpdateUI(itemIndex);
+        
 
-        if(previousItemIndex != -1)
+
+        if (previousItemIndex != -1)
         {
             items[previousItemIndex].itemGameObject.SetActive(false);
         }
@@ -176,9 +189,21 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
     {
         grounded = _grounded;
     }
+
     public void TakeDamage(float damage)
     {
         PV.RPC("RPC_TakeDamage", RpcTarget.All, damage);
+    }
+
+    void Die()
+    {
+        playerManager.Die();
+    }
+
+    private void UpdateUI(int index)
+    {
+        uiPlayer.ammunation.text = items[index]?.GetComponent<Gun>().ammunation.ToString();
+        uiPlayer.maxAmmunation.text = items[index]?.GetComponent<Gun>().maxAmmunation.ToString();
     }
 
     [PunRPC]
@@ -190,16 +215,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
         }
 
         curretHealth -= damage;
-        HealthBarImage.fillAmount = curretHealth / maxHealth;
+        uiPlayer.HealthBarImage.fillAmount = curretHealth / maxHealth;
 
         if (curretHealth <= 0)
         {
             Die();
         }
-    }
-
-    void Die()
-    {
-        playerManager.Die();
     }
 }
