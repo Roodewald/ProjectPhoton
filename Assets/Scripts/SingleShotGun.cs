@@ -38,7 +38,7 @@ public class SingleShotGun : Gun
                 hit.collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(((GunInfo)itemInfo).damage);
                 PV.RPC("RPCShot", RpcTarget.All, hit.point, hit.normal);
             }
-            PV.RPC("PlayShootSound", RpcTarget.All);
+            PV.RPC("PlayEffects", RpcTarget.All);
             ammunation--;
         }
         else
@@ -55,9 +55,10 @@ public class SingleShotGun : Gun
 
     }
     [PunRPC]
-    void PlayShootSound()
+    void PlayEffects()
     {
         shootSound.Play();
+        muzzleFlash.Play();
     }
 
 }

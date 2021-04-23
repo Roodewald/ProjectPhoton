@@ -10,6 +10,7 @@ public abstract class Gun : Item
     public int maxAmmunation;
     public int ammunation;
     public GameObject bulletImpactPrefab;
+    public ParticleSystem muzzleFlash;
 
     public AudioSource shootSound;
 }
