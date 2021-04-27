@@ -13,9 +13,7 @@ public class SingleShotGun : Gun
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
-        maxAmmunation = ((GunInfo)itemInfo).ammunation;
         ammunation = maxAmmunation;
-
     }
     public override void Reload()
     {
@@ -35,7 +33,7 @@ public class SingleShotGun : Gun
             ray.origin = playerCamera.transform.position;
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                hit.collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                hit.collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(damage);
                 PV.RPC("RPCShot", RpcTarget.All, hit.point, hit.normal);
             }
             PV.RPC("PlayEffects", RpcTarget.All);

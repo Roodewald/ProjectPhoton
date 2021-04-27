@@ -204,6 +204,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
     {
         uiPlayer.ammunation.text = items[index]?.GetComponent<Gun>().ammunation.ToString();
         uiPlayer.maxAmmunation.text = items[index]?.GetComponent<Gun>().maxAmmunation.ToString();
+        uiPlayer.itemName.text = items[index].itemName;
     }
 
     [PunRPC]

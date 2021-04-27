@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Item : MonoBehaviour
 {
-    public ItemInfo itemInfo;
+    public string itemName;
     public GameObject itemGameObject;
 
     public abstract void Use();

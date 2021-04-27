@@ -7,6 +7,7 @@ using TMPro;
 
 public class UIPlayer : MonoBehaviour
 {
+    public TMP_Text itemName;
     public TMP_Text ammunation;
     public TMP_Text maxAmmunation;
     public Image HealthBarImage;
