@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
     [SerializeField] float  sprintSpeed, walkSpeed, jumpForce, smoothTime;
     public float mouseSensitivity;
     [SerializeField] Item[] items;
+    
 
     int itemIndex;
     int previousItemIndex = -1;
@@ -66,6 +67,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
         Look();
         Move();
         Jump();
+        UpdateUI(itemIndex);
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -106,12 +108,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
         if (Input.GetMouseButtonDown(0))
         {
             items[itemIndex].Use();
-            UpdateUI(itemIndex);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            items[itemIndex]?.GetComponent<Gun>().Reload();
-            UpdateUI(itemIndex);
+           items[itemIndex]?.GetComponent<Gun>().Reload();
+
         }
 
         if (transform.position.y < -50)
@@ -200,11 +201,16 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
         playerManager.Die();
     }
 
-    private void UpdateUI(int index)
+    public void UpdateUI(int index)
     {
         uiPlayer.ammunation.text = items[index]?.GetComponent<Gun>().ammunation.ToString();
         uiPlayer.maxAmmunation.text = items[index]?.GetComponent<Gun>().maxAmmunation.ToString();
         uiPlayer.itemName.text = items[index].itemName;
+    }
+    IEnumerator TimerUpdateUI(float timer)
+    {
+        yield return new WaitForSeconds(timer);
+        UpdateUI(itemIndex);
     }
 
     [PunRPC]

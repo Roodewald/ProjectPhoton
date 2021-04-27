@@ -6,7 +6,8 @@ using Photon.Pun;
 public class SingleShotGun : Gun
 {
     [SerializeField] Camera playerCamera;
-
+    [SerializeField] Animator anim;
+    bool reloading = false;
 
     PhotonView PV;
 
@@ -17,17 +18,19 @@ public class SingleShotGun : Gun
     }
     public override void Reload()
     {
-        ammunation = maxAmmunation;
+        if (ammunation < maxAmmunation)
+        {
+            StartCoroutine(TimerReload());
+        }
     }
 
     public override void Use()
     {
         Shoot();
-
     }
     void Shoot()
     {
-        if(ammunation > 0)
+        if(ammunation > 0 && !reloading)
         {
             Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f));
             ray.origin = playerCamera.transform.position;
@@ -39,10 +42,17 @@ public class SingleShotGun : Gun
             PV.RPC("PlayEffects", RpcTarget.All);
             ammunation--;
         }
-        else
-        {
-            Reload();
-        }
+    }
+    IEnumerator TimerReload()
+    {
+        reloading = true;
+        anim.SetBool("Reloading", reloading);
+
+        yield return new WaitForSeconds(1.0f);
+
+        ammunation = maxAmmunation;
+        reloading = false;
+        anim.SetBool("Reloading", reloading);
     }
 
     [PunRPC]
@@ -58,5 +68,4 @@ public class SingleShotGun : Gun
         shootSound.Play();
         muzzleFlash.Play();
     }
-
 }
