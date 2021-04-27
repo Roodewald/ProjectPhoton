@@ -499,7 +499,7 @@ MonoBehaviour:
   smoothTime: 0.1
   mouseSensitivity: 3
   items:
-  - {fileID: 7354337633829283143}
+  - {fileID: 7451630170789583433}
   - {fileID: 2070743217451809458}
 --- !u!54 &5402082477189098106
 Rigidbody:
@@ -616,7 +616,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2920876976120729739}
-  - component: {fileID: 7354337633829283143}
+  - component: {fileID: 7451630170789583433}
   - component: {fileID: 8937653677831340583}
   - component: {fileID: 1682897814292618463}
   m_Layer: 9
@@ -641,7 +641,7 @@ Transform:
   m_Father: {fileID: 8277768732871793194}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7354337633829283143
+--- !u!114 &7451630170789583433
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -650,12 +650,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5493560999119349273}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83bcc0c4117259940969acba4c833f8b, type: 3}
+  m_Script: {fileID: 11500000, guid: d8933e84505d8204e839e5db1edd8aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Ak 47
+  itemName: AK47
   itemGameObject: {fileID: 434558222085910135}
-  damage: 35
+  damage: 25
   maxAmmunation: 30
   reloadTime: 1.5
   ammunation: 0
@@ -665,6 +665,8 @@ MonoBehaviour:
   shootSound: {fileID: 1682897814292618463}
   playerCamera: {fileID: 5059212165511633014}
   anim: {fileID: 3378637098702528043}
+  shotCounter: 0
+  fireRate: 0.1
 --- !u!114 &8937653677831340583
 MonoBehaviour:
   m_ObjectHideFlags: 0

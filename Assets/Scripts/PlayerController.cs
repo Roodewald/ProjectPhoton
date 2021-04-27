@@ -16,8 +16,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
     [SerializeField] float  sprintSpeed, walkSpeed, jumpForce, smoothTime;
     public float mouseSensitivity;
     [SerializeField] Item[] items;
-    
 
+    bool isFire;
     int itemIndex;
     int previousItemIndex = -1;
 
@@ -57,6 +57,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
             Destroy(GetComponentInChildren<Camera>().gameObject);
             Destroy(playerRigidbody);
             Destroy(ui);
+            for (int i = 0; i < items.Length; i++)
+            {
+                items[i].gameObject.SetActive(false);
+            }
         }
     }
 
@@ -107,8 +111,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamagable
         }
         if (Input.GetMouseButtonDown(0))
         {
+            isFire = true;
             items[itemIndex].Use();
         }
+        /*else if (Input.GetMouseButtonUp(0))
+        {
+            isFire = false;
+            items[itemIndex]?.GetComponent<AutoShotGun>().Use(isFire);
+        }*/
         if (Input.GetKeyDown(KeyCode.R))
         {
            items[itemIndex]?.GetComponent<Gun>().Reload();
